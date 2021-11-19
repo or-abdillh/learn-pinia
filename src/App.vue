@@ -1,21 +1,66 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+   <h1>List Buku</h1>
+   <ol>
+      <pre>
+  
+      </pre>
+      <template v-for="(book, index) in allBooks" :key="index">
+         <li>
+            {{ book.title }} - {{ book.author }} - {{ book.pages }} halaman
+         </li>
+      </template>
+   </ol>
+
+   <h1>Tambah Buku :</h1>
+   <ul>
+      <li>
+         <input v-model="newBook.judul" type="text" placeholder="Judul Buku"/>
+         <input v-model="newBook.penulis" type="text" placeholder="Penulis Buku"/>
+         <input v-model="newBook.halaman" type="number" placeholder="Jumlah Halaman"/>
+         <br />
+         <button @click="addBook()" type="button">Tambah Buku</button>
+      </li>
+   </ul>
 </template>
 
+<script setup>
+   import { useBooks } from '/src/store/Books.js'
+   import { computed, reactive } from 'vue'
+   
+   const book = useBooks()
+   const allBooks = computed(() => book.allBooks)
+   const idBook = computed(() => book.generateIdBook())
+   
+   //Form buku baru
+   const newBook = reactive({
+      judul: '',
+      penulis: '',
+      halaman: ''
+   })
+   
+   //Push newBook to state
+   const addBook = () => book.add({
+      title: newBook.judul,
+      author: newBook.penulis,
+      pages: newBook.halaman
+   })
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding: 1rem 2rem;
+}
+
+ul {
+   list-style: none;
+   padding: 0;
+}
+
+input, button {
+   margin-top: .75rem;
+   padding: .55rem .3rem;
 }
 </style>
