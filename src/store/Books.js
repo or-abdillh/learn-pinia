@@ -15,6 +15,9 @@ export const useBooks = defineStore('books', {
       },
       generateIdBook() {
          return this.books.length + 1
+      },
+      deleteBook(id) {
+         this.books = this.books.filter(book => book.id !== id)
       }
    },
    getters: {

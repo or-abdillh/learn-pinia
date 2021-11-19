@@ -1,12 +1,12 @@
 <template>
    <h1>List Buku</h1>
    <ol>
-      <pre>
-  
-      </pre>
       <template v-for="(book, index) in allBooks" :key="index">
          <li>
             {{ book.title }} - {{ book.author }} - {{ book.pages }} halaman
+            <p @click="deleteBook(book.id)">
+               <a href="#">Hapus</a>
+            </p>
          </li>
       </template>
    </ol>
@@ -44,6 +44,11 @@
       author: newBook.penulis,
       pages: newBook.halaman
    })
+   
+   //Delete book
+   const deleteBook = id => {
+      book.deleteBook(id)
+   }
 </script>
 <style>
 #app {
